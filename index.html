@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>skeleton loding</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="grid"></div>
+    <template id="card-template">
+        <div class="card">
+            <div class="header">
+                <img class="header-img skeleton" src="https://source.unsplash.com/100x100/?nature">
+                <div class="title" data-title>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text"></div>
+                </div>
+            </div>
+            <div data-body>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+            </div>
+        </div>
+    </template>
+</body>
+<!-- javascript code -->
+<script>
+    const grid = document.querySelector('.grid')
+    const cardTemplate = document.getElementById('card-template')
+    console.log(grid + " " + cardTemplate)
+    for (var i = 0; i < 12; i++) {
+        grid.append(cardTemplate.content.cloneNode(true))
+    }
+
+    fetch("https://jsonplaceholder.typicode.com/posts")
+        .then(res => res.json())
+        .then(result => {
+
+            setTimeout(() => {
+                grid.innerHTML = ''
+                result.forEach(item => {
+                    const div = cardTemplate.content.cloneNode(true)
+                    div.querySelector('[data-title]').textContent = item.title
+                    div.querySelector('[data-body]').textContent = item.body
+                    grid.append(div)
+
+                })
+            }, 3000)
+        })
+</script>
+
+</html>
